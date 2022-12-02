@@ -6,7 +6,7 @@ from Window.SearchAlgorithms import Algorithms
 class Button:
     def __init__(self, text = ""):
         self.width = 200
-        self.height = 100
+        self.height = 50
         self.color = (221,160,221)
         self.text = text
 
@@ -25,26 +25,11 @@ class Button:
         return False
 
 
-class StartButton(Button):
-    def __init__(self, text):
-        super().__init__(text)
-        self.x = 5
-        self.y = 0
-        self.tick = 60
-
-    def checkClicked(self,clickPos, parent = False):
-        if parent:
-            return super().checkClicked(clickPos)
-        if (clickPos[0]>self.x and clickPos[0]<self.x+self.width) and (clickPos[1]>self.y and clickPos[1]<self.y+self.height):
-            return True
-        return False
-
-
 class AStarSearchButton(Button):
     def __init__(self,text):
         super().__init__(text)
         self.x = 5
-        self.y = 420
+        self.y = 225
 
     def checkClicked(self, clickPos, window):
         if (clickPos[0]>self.x and clickPos[0]<self.x+self.width) and (clickPos[1]>self.y and clickPos[1]<self.y+self.height):
@@ -53,6 +38,19 @@ class AStarSearchButton(Button):
     def findPath(self,window):
         pathFound = Algorithms.AStarSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
         window.map.pathFound = pathFound
+
+class ClearButton(Button):
+    def __init__(self,text):
+        super().__init__(text)
+        self.x = 5
+        self.y = 170
+
+    def checkClicked(self, clickPos, window):
+        if (clickPos[0]>self.x and clickPos[0]<self.x+self.width) and (clickPos[1]>self.y and clickPos[1]<self.y+self.height):
+            self.clear(window)
+
+    def clear(self,window):
+        window.map.pathFound = []
 
         
 # class PauseButton(Button):
@@ -102,7 +100,7 @@ class SaveButton(Button):
     def __init__(self,text):
         super().__init__(text)
         self.x = 5
-        self.y = 105
+        self.y = 5
 
     def checkClicked(self,clickPos,window, parent = False):
         if parent:
@@ -118,7 +116,7 @@ class ZoomOutButton(Button):
     def __init__(self,text):
         super().__init__(text)
         self.x = 5
-        self.y = 315
+        self.y = 115
         
     def checkClicked(self,clickPos,window,display, parent = False):
         if parent:
@@ -133,7 +131,7 @@ class ZoomInButton(Button):
     def __init__(self,text):
         super().__init__(text)
         self.x = 5
-        self.y = 210
+        self.y = 60
         
     def checkClicked(self,clickPos,window,display, parent = False):
         if parent:

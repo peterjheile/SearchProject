@@ -46,7 +46,7 @@ class Generator:
             return allClosest
 
         for location in allLocations:
-            closest = findClosestLocations(location,randint(1,3)-len(location.connections),allLocations)
+            closest = findClosestLocations(location,randint(2,3)-len(location.connections),allLocations)
             for each in closest:
                 if each not in location.connections:
                     location.connections.append(each)

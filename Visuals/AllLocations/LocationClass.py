@@ -9,7 +9,7 @@ class Location:
         self.canChange = True
         self.destination = destination
         self.start = start
-        self.width = 25
+        self.width = 30
         self.height = self.width
         self.color = (200,250,0) if self.destination else (0,0,0)
         if self.start: self.color = (255,0,0)

@@ -9,7 +9,9 @@
 #THE LOCATIONS THAT A LOCATION IS CONNECTED TO CAN BE ACCESSED USING point.connections
 #USING point.connections will return a list of other points that the location is connected to
 
+# pointA.cost(pointB) <----- returns the cost to get from location a to location b
 
+#point.connections    <----- returns the locations that the point is connected to
 #--------------------------------
 
 import math
@@ -28,9 +30,9 @@ class Algorithms:
         return abs(a.x - b.x) + abs(a.y - b.y)
 
 #--------------------------------
-
+#point ==  starting locations
     @classmethod
-    def AStarSearch(point, destination1, destination2):
+    def AStarSearch(self, point, destination1, destination2):
         frontier = PriorityQueue()
         x = point.x
         y = point.y
@@ -77,7 +79,7 @@ class Algorithms:
             if current == goal:
                 break
             
-            for next in graph.neighbors(current):
+            for next in point.connections:
                 if next not in came_from:
                     priority = Algorithms.heuristic1(goal, next)
                     frontier.put(next, priority)

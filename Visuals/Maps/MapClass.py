@@ -40,10 +40,13 @@ class Map:
             for other in location.connections:
                 pygame.draw.line(display,(0,0,0),(location.x,location.y),(other.x,other.y),width = 1)
 
+        color = (255,0,0)
         for index in range(len(self.pathFound)-1):
             location = self.pathFound[index]
             next = self.pathFound[index+1]
-            pygame.draw.line(display,(255,0,0),(location.x,location.y),(next.x,next.y),width = 3)
+            pygame.draw.line(display,color,(location.x,location.y),(next.x,next.y),width = 3)
+            if self.pathFound(index):
+                color = (255,200)
 
     def draw(self,display):
         self.drawMap(display)
