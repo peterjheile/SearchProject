@@ -29,34 +29,40 @@ class Algorithms:
         # Manhattan distance on a square grid
         return abs(a.x - b.x) + abs(a.y - b.y)
 
+#possible hueristic
+# ----------> find the angle and if it goes backwards, then not likely the path to take
+
+
 #--------------------------------
 #point ==  starting locations
     @classmethod
     def AStarSearch(self, point, destination1, destination2):
-        frontier = PriorityQueue()
-        x = point.x
-        y = point.y
-        start = (x,y)
-        frontier.put(start, 0)
-        came_from = dict()
-        cost_so_far = dict()
-        came_from[start] = None
-        cost_so_far[start] = 0
-        goal = destination1
+        return [point, destination1,destination1]
 
-        while not frontier.empty():
-            current = frontier.get()
+        # frontier = PriorityQueue()
+        # x = point.x
+        # y = point.y
+        # start = (x,y)
+        # frontier.put(start, 0)
+        # came_from = dict()
+        # cost_so_far = dict()
+        # came_from[start] = None
+        # cost_so_far[start] = 0
+        # goal = destination1
 
-            if current == goal:
-                break
+        # while not frontier.empty():
+        #     current = frontier.get()
+
+        #     if current == goal:
+        #         break
         
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost + Algorithms.heuristic1(goal, next)
-                    frontier.put(next, priority)
-                    came_from[next] = current
+        #     for next in graph.neighbors(current):
+        #         new_cost = cost_so_far[current] + graph.cost(current, next)
+        #         if next not in cost_so_far or new_cost < cost_so_far[next]:
+        #             cost_so_far[next] = new_cost
+        #             priority = new_cost + Algorithms.heuristic1(goal, next)
+        #             frontier.put(next, priority)
+        #             came_from[next] = current
             
 
     #--------------------------------

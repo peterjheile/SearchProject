@@ -45,8 +45,8 @@ class Map:
             location = self.pathFound[index]
             next = self.pathFound[index+1]
             pygame.draw.line(display,color,(location.x,location.y),(next.x,next.y),width = 3)
-            if self.pathFound(index):
-                color = (255,200)
+            if self.pathFound[index]:
+                color = (255,200,0)
 
     def draw(self,display):
         self.drawMap(display)
