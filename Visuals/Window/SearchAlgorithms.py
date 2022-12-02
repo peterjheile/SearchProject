@@ -56,8 +56,8 @@ class Algorithms:
         #     if current == goal:
         #         break
         
-        #     for next in graph.neighbors(current):
-        #         new_cost = cost_so_far[current] + graph.cost(current, next)
+        #     for next in point.connections:
+        #         new_cost = cost_so_far[current] + point.cost(destination1)
         #         if next not in cost_so_far or new_cost < cost_so_far[next]:
         #             cost_so_far[next] = new_cost
         #             priority = new_cost + Algorithms.heuristic1(goal, next)
@@ -121,8 +121,8 @@ class Algorithms:
             if current == goal:
                 break
             
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
+            for next in point.connections:
+                new_cost = cost_so_far[current] + point.cost(destination1)
                 if next not in cost_so_far or new_cost < cost_so_far[next]:
                     cost_so_far[next] = new_cost
                     priority = new_cost
