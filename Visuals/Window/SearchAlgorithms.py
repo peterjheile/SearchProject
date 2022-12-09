@@ -29,10 +29,20 @@ class Algorithms:
         # Manhattan distance on a square grid
         return abs(a.x - b.x) + abs(a.y - b.y)
 
+    #-----------------------------------------
+    def f_value(point_s,nextPoint,destination1,destination2):
+        return point_s.cost(nextPoint)+Algorithms.hueristic(nextPoint,destination1,destination2)
     #--------------------------------
     @classmethod
-    def AStarSearch(self, point, destination1, destination2):
-        fringe = [point]
+    def AStarSearch(self, start, destination1, destination2, maxDepth == 10):
+        depth = 0
+        fringe = [start]
+
+        lowest = fringe.pop(0)
+        for point in fringe:
+            if point!= lowest:
+                if Algorithms.f_value(lowest,) < 
+
 
 
 
