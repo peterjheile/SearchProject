@@ -14,15 +14,9 @@ import math
 from queue import PriorityQueue
 class Algorithms:
 
-    def heuristic1(point_s,destination1,destination2):
-        #this is a hueristic for the shortest distance ot the points, regardless of paths. This is also known as
-        # "as the crow flies"
-        if math.dist((point_s.x,point_s.y),(destination1.x,destination1.y))<math.dist((point_s.x,point_s.y),(destination2.x,destination2.y)):
-            dist1 = math.dist((point_s.x,point_s.y),(destination1.x,destination1.y))
-        else:
-            dist1 = math.dist((point_s.x,point_s.y),(destination2.x,destination2.y))
-        dist2 = math.dist((destination2.x,destination2.y),(destination1.x,destination1.y))
-        return dist1+dist2
+    def heuristic1(point_s,point_g):
+        # a basic heuristic that uses euclidean distance, returns a float
+        return math.sqrt((point_s-point_g)**2 + (point_s-point_g)**2)
     #--------------------------------
 
     def heuristic2(a,b):
@@ -32,17 +26,6 @@ class Algorithms:
     #--------------------------------
     @classmethod
     def AStarSearch(self, point, destination1, destination2):
-        fringe = [point]
-
-
-
-
-
-
-
-
-
-
         frontier = PriorityQueue()
         x = point.x
         y = point.y
