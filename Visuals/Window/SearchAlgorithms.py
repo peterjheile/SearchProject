@@ -14,15 +14,9 @@ import math
 from queue import PriorityQueue
 class Algorithms:
 
-    def heuristic1(point_s,destination1,destination2):
-        #this is a hueristic for the shortest distance ot the points, regardless of paths. This is also known as
-        # "as the crow flies"
-        if math.dist((point_s.x,point_s.y),(destination1.x,destination1.y))<math.dist((point_s.x,point_s.y),(destination2.x,destination2.y)):
-            dist1 = math.dist((point_s.x,point_s.y),(destination1.x,destination1.y))
-        else:
-            dist1 = math.dist((point_s.x,point_s.y),(destination2.x,destination2.y))
-        dist2 = math.dist((destination2.x,destination2.y),(destination1.x,destination1.y))
-        return dist1+dist2
+    def heuristic1(point_s,point_g):
+        # a basic heuristic that uses euclidean distance, returns a float
+        return math.sqrt((point_s-point_g)**2 + (point_s-point_g)**2)
     #--------------------------------
 
     def heuristic2(a,b):
@@ -34,23 +28,8 @@ class Algorithms:
         return point_s.cost(nextPoint)+Algorithms.hueristic(nextPoint,destination1,destination2)
     #--------------------------------
     @classmethod
-    def AStarSearch(self, start, destination1, destination2, maxDepth == 10):
-        depth = 0
-        fringe = [start]
-
-        lowest = fringe.pop(0)
-        for point in fringe:
-            if point!= lowest:
-                if Algorithms.f_value(lowest,) < 
-
-
-
-
-
-
-
-
-
+    def AStarSearch(self, point, destination1, destination2):
+        fringe = [point]
 
 
         frontier = PriorityQueue()
@@ -69,12 +48,11 @@ class Algorithms:
 
             if current == goal:
                 break
-        
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
+            for next in point.connections:
+                new_cost = cost_so_far[current] + next.cost(next)
                 if next not in cost_so_far or new_cost < cost_so_far[next]:
                     cost_so_far[next] = new_cost
-                    priority = new_cost + heuristic1(goal, next)
+                    priority = new_cost + Algorithms.heuristic1(goal.cost(goal),next.cost(next))
                     frontier.put(next, priority)
                     came_from[next] = current
             
@@ -101,7 +79,7 @@ class Algorithms:
             
             for next in graph.neighbors(current):
                 if next not in came_from:
-                    priority = heuristic1(goal, next)
+                    priority = Algorithms.heuristic1(goal.cost(), next.cost())
                     frontier.put(next, priority)
                     came_from[next] = current
 
