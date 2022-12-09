@@ -25,7 +25,7 @@ class Algorithms:
 
     #--------------------------------
     @classmethod
-    def AStarSearch(point, destination1, destination2):
+    def AStarSearch(self, point, destination1, destination2):
         frontier = PriorityQueue()
         x = point.x
         y = point.y
@@ -55,7 +55,7 @@ class Algorithms:
     #--------------------------------
     #--------------------------------
     @classmethod
-    def greedySearch(point, destination1, destination2):
+    def greedySearch(self, point, destination1, destination2):
         x = point.x
         y = point.y
         start = (x,y)
@@ -81,13 +81,13 @@ class Algorithms:
     #--------------------------------
     #--------------------------------
     @classmethod
-    def MarkovSearch(point):
+    def MarkovSearch(self, point, destination1, destination2):
         pass
 
     #--------------------------------
     #--------------------------------
     @classmethod
-    def DijkstrasSearch(point, destination1, destination2):
+    def DijkstrasSearch(self, spoint, destination1, destination2):
         x = point.x
         y = point.y
         start = (x,y)
