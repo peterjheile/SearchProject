@@ -16,7 +16,7 @@ class Algorithms:
 
     def heuristic1(point_s,point_g):
         # a basic heuristic that uses euclidean distance, returns a float
-        return math.sqrt((point_s.cost-point_g.cost)**2 + (point_s.cost-point_g.cost)**2)
+        return math.sqrt((point_s-point_g)**2 + (point_s-point_g)**2)
     #--------------------------------
 
     def heuristic2(a,b):
@@ -46,7 +46,7 @@ class Algorithms:
                 new_cost = cost_so_far[current] + next.cost(next)
                 if next not in cost_so_far or new_cost < cost_so_far[next]:
                     cost_so_far[next] = new_cost
-                    priority = new_cost + Algorithms.heuristic1(goal, next)
+                    priority = new_cost + Algorithms.heuristic1(goal.cost(goal),next.cost(next))
                     frontier.put(next, priority)
                     came_from[next] = current
             
@@ -73,7 +73,7 @@ class Algorithms:
             
             for next in graph.neighbors(current):
                 if next not in came_from:
-                    priority = heuristic1(goal, next)
+                    priority = Algorithms.heuristic1(goal.cost(), next.cost())
                     frontier.put(next, priority)
                     came_from[next] = current
 
