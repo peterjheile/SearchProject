@@ -118,3 +118,6 @@ class Algorithms:
                     priority = new_cost
                     frontier.put(next, priority)
                     came_from[next] = current
+
+    #work code: kind of like greedy search where it choses the shortest path given. If a previous point is found and there is a path which is 'cheaper',
+        #use that to get the path
