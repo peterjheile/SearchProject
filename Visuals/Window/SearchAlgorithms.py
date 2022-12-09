@@ -69,27 +69,28 @@ class Algorithms:
     #--------------------------------
     @classmethod
     def greedySearch(point, destination1, destination2):
-        x = point.x
-        y = point.y
-        start = (x,y)
-        goal = destination1
+        pass
+        # x = point.x
+        # y = point.y
+        # start = (x,y)
+        # goal = destination1
         
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = dict()
-        came_from[start] = None
+        # frontier = PriorityQueue()
+        # frontier.put(start, 0)
+        # came_from = dict()
+        # came_from[start] = None
 
-        while not frontier.empty():
-            current = frontier.get()
+        # while not frontier.empty():
+        #     current = frontier.get()
 
-            if current == goal:
-                break
+        #     if current == goal:
+        #         break
             
-            for next in point.connections:
-                if next not in came_from:
-                    priority = Algorithms.heuristic1(goal, next)
-                    frontier.put(next, priority)
-                    came_from[next] = current
+        #     for next in point.connections:
+        #         if next not in came_from:
+        #             priority = Algorithms.heuristic1(goal, next)
+        #             frontier.put(next, priority)
+        #             came_from[next] = current
 
 
     #--------------------------------
@@ -103,28 +104,29 @@ class Algorithms:
     #--------------------------------
     @classmethod
     def DijkstrasSearch(point, destination1, destination2):
-        x = point.x
-        y = point.y
-        start = (x,y)
-        goal = destination1
+        pass
+        # x = point.x
+        # y = point.y
+        # start = (x,y)
+        # goal = destination1
         
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = dict()
-        cost_so_far = dict()
-        came_from[start] = None
-        cost_so_far[start] = 0
+        # frontier = PriorityQueue()
+        # frontier.put(start, 0)
+        # came_from = dict()
+        # cost_so_far = dict()
+        # came_from[start] = None
+        # cost_so_far[start] = 0
 
-        while not frontier.empty():
-            current = frontier.get()
+        # while not frontier.empty():
+        #     current = frontier.get()
             
-            if current == goal:
-                break
+        #     if current == goal:
+        #         break
             
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost
-                    frontier.put(next, priority)
-                    came_from[next] = current
+        #     for next in graph.neighbors(current):
+        #         new_cost = cost_so_far[current] + graph.cost(current, next)
+        #         if next not in cost_so_far or new_cost < cost_so_far[next]:
+        #             cost_so_far[next] = new_cost
+        #             priority = new_cost
+        #             frontier.put(next, priority)
+        #             came_from[next] = current

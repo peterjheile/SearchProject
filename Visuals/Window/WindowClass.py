@@ -13,6 +13,7 @@ class Window:
         self.color = (255,0,0)
         self.createMap()
         self.createGUI()
+        self.information = ["Calculation time: None","Path distance: None"]
 
 #creates a map and everything that is desplayed on the screen
 #that the user cannot itnerract with
@@ -31,7 +32,16 @@ class Window:
         display.fill((255,0,0))
         self.map.draw(display)
         self.gui.draw(display)
+        self.drawInformation(display)
         pygame.display.update()
+    
+    def drawInformation(self, display):
+        depth = 0
+        for info in self.information:
+            font = pygame.font.SysFont(None, 25)
+            img = font.render(info, True, (255,255,255))
+            display.blit(img, (self.length-250,50 + depth))
+            depth += 25
 
 
 

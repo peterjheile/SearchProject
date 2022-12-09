@@ -25,7 +25,6 @@ class Map:
         self.allLocations += Generator.generateAllLocations(self.width,self.height)
         self.allLocations += Generator.generateAllIntersections(self.width,self.height,self.allLocations)
         Generator.generateAllRoads(self.allLocations)
-
         self.pathFound = []
 
 
@@ -50,4 +49,5 @@ class Map:
 
     def draw(self,display):
         self.drawMap(display)
+
 

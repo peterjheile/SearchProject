@@ -2,6 +2,9 @@ import pygame
 import sys
 import pickle
 from Window.SearchAlgorithms import Algorithms
+import math
+import time
+
 
 class Button:
     def __init__(self, text = ""):
@@ -24,6 +27,12 @@ class Button:
             return True
         return False
 
+    def updateDisplayInformation(self,window,pathFound,time):
+        distance = 0
+        for index in range(1,len(pathFound)):
+            distance += math.dist((pathFound[index].x,pathFound[index].y),(pathFound[index-1].x,pathFound[index-1].y))
+        window.information = ["Calculation time:"+str(time),"Path distance:"+str(round(distance,2))]
+
 
 class AStarSearchButton(Button):
     def __init__(self,text):
@@ -36,8 +45,50 @@ class AStarSearchButton(Button):
             self.findPath(window)
 
     def findPath(self,window):
+        t0 = time.time()
         pathFound = Algorithms.AStarSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        t1 = time.time()
+        print(t0,t1)
         window.map.pathFound = pathFound
+        self.updateDisplayInformation(window,pathFound,t1-t0)
+
+
+class greedySearchButton(Button):
+    def __init__(self,text):
+        super().__init__(text)
+        self.x = 5
+        self.y = 280
+
+    def checkClicked(self, clickPos, window):
+        if (clickPos[0]>self.x and clickPos[0]<self.x+self.width) and (clickPos[1]>self.y and clickPos[1]<self.y+self.height):
+            self.findPath(window)
+
+    def findPath(self,window):
+        t0 = time.time()
+        pathFound = Algorithms.greedySearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        t1 = time.time()
+        print(t0,t1)
+        window.map.pathFound = pathFound
+        self.updateDisplayInformation(window,pathFound,t1-t0)
+
+class DijkstrasSearchButton(Button):
+    def __init__(self,text):
+        super().__init__(text)
+        self.x = 5
+        self.y = 335
+
+    def checkClicked(self, clickPos, window):
+        if (clickPos[0]>self.x and clickPos[0]<self.x+self.width) and (clickPos[1]>self.y and clickPos[1]<self.y+self.height):
+            self.findPath(window)
+
+    def findPath(self,window):
+        t0 = time.time()
+        pathFound = Algorithms.DijkstrasSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        t1 = time.time()
+        print(t0,t1)
+        window.map.pathFound = pathFound
+        self.updateDisplayInformation(window,pathFound,t1-t0)
+
 
 class ClearButton(Button):
     def __init__(self,text):
