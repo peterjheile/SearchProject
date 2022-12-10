@@ -28,10 +28,7 @@ class Algorithms:
         return point_s.cost(nextPoint)+Algorithms.hueristic(nextPoint,destination1,destination2)
     #--------------------------------
     @classmethod
-    def AStarSearch(self, point, destination1, destination2):
-        fringe = [point]
-
-
+    def AStarSearch(self, point, destination1, destination2, maxDepth= 10):
         frontier = PriorityQueue()
         x = point.x
         y = point.y
@@ -60,28 +57,48 @@ class Algorithms:
     #--------------------------------
     #--------------------------------
     @classmethod
-    def greedySearch(self, point, destination1, destination2):
-        x = point.x
-        y = point.y
-        start = (x,y)
-        goal = destination1
+    def greedySearch(self, point, destination1, destination2, depth = 0, maxDepth = 20):
+        destination1Found = False
+        destination2Found = False
+
+        def findClosest(point, fringe,path):
+            lowest = fringe[0]
+            for node in fringe[1:]:
+                if lowest.cost(node) < point.cost(lowest) and (lowest not in path):
+                    lowest = node
+            return fringe.index(lowest)
+
+        fringe = [point]
+        path = []
+        while fringe and depth < 20:
+            print("calculating")
+
+            if not(path):
+                node = fringe.pop(findClosest(point,fringe,path))
+            else: 
+                node = fringe.pop(findClosest(path[len(path)-1],fringe,path))
+            path.append(node)
+            if node == destination1:
+                destination1Found == True
+            elif node == destination2:
+                destination2Found == True
+
+            print(fringe,destination1Found,destination2Found)
+            if destination1 and destination2:
+                return path
+            fringe = fringe + node.connections
+            depth += 1
+            print(len(fringe))
+
+        return "No Path Found"
+
+
+
         
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = dict()
-        came_from[start] = None
 
-        while not frontier.empty():
-            current = frontier.get()
 
-            if current == goal:
-                break
+
             
-            for next in graph.neighbors(current):
-                if next not in came_from:
-                    priority = Algorithms.heuristic1(goal.cost(), next.cost())
-                    frontier.put(next, priority)
-                    came_from[next] = current
 
     #--------------------------------
     #--------------------------------

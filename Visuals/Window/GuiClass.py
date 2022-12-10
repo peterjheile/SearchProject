@@ -24,6 +24,8 @@ class GUI:
     def update(self,mousePos,display,window):
         self.clearButton.checkClicked(mousePos,window)
         self.AStarSearchButton.checkClicked(mousePos,window)
+        self.DijkstrasSearchButton.checkClicked(mousePos,window)
+        self.greedySearchbutton.checkClicked(mousePos,window)
         self.saveButton.checkClicked(mousePos,window)
         self.ZoomInButton.checkClicked(mousePos,window,display)
         self.ZoomOutButton.checkClicked(mousePos,window,display)

@@ -28,10 +28,13 @@ class Button:
         return False
 
     def updateDisplayInformation(self,window,pathFound,time):
-        distance = 0
-        for index in range(1,len(pathFound)):
-            distance += math.dist((pathFound[index].x,pathFound[index].y),(pathFound[index-1].x,pathFound[index-1].y))
-        window.information = ["Calculation time:"+str(time),"Path distance:"+str(round(distance,2))]
+        if isinstance(pathFound,list):
+            distance = 0
+            for index in range(1,len(pathFound)):
+                distance += math.dist((pathFound[index].x,pathFound[index].y),(pathFound[index-1].x,pathFound[index-1].y))
+            window.information = ["Calculation time:"+str(time),"Path distance:"+str(round(distance,2))]
+        else:
+            window.information = ["Error: No Path Found"]
 
 
 class AStarSearchButton(Button):
