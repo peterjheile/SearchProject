@@ -16,7 +16,7 @@ class Algorithms:
 
     def heuristic1(point_s,point_g):
         # a basic heuristic that uses euclidean distance, returns a float
-        return math.sqrt((point_s-point_g)**2 + (point_s-point_g)**2)
+        return math.dist((point_s-point_g)**2 + (point_s-point_g)**2)
     #--------------------------------
 
     def heuristic2(a,b):
@@ -57,7 +57,7 @@ class Algorithms:
     #--------------------------------
     #--------------------------------
     @classmethod
-    def greedySearch(self, point, destination1, destination2, depth = 0, maxDepth = 20):
+    def greedySearch(self, point, destination1, destination2, depth = 0, maxDepth = 30):
         destination1Found = False
         destination2Found = False
 
@@ -66,11 +66,12 @@ class Algorithms:
             for node in fringe[1:]:
                 if lowest.cost(node) < point.cost(lowest) and (lowest not in path):
                     lowest = node
+            print(lowest)
             return fringe.index(lowest)
 
         fringe = [point]
         path = []
-        while fringe and depth < 20:
+        while fringe and depth < maxDepth:
             print("calculating")
 
             if not(path):
@@ -93,12 +94,6 @@ class Algorithms:
         return "No Path Found"
 
 
-
-        
-
-
-
-            
 
     #--------------------------------
     #--------------------------------
