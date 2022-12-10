@@ -110,10 +110,6 @@ class Algorithms:
     #--------------------------------
     @classmethod
     def DijkstrasSearch(self, spoint, destination1, destination2):
-        x = point.x
-        y = point.y
-        start = (x,y)
-        goal = destination1
         
         frontier = PriorityQueue()
         frontier.put(start, 0)
@@ -135,3 +131,12 @@ class Algorithms:
                     priority = new_cost
                     frontier.put(next, priority)
                     came_from[next] = current
+
+    
+        
+
+    #work code: kind of like greedy search where it choses the shortest path given. If a previous point is found and there is a path which is 'cheaper',
+        #use that to get the path
+    #explore = [child nodes]
+    #while (destination hasn't been reached):
+        #
