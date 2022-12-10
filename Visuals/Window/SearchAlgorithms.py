@@ -73,7 +73,6 @@ class Algorithms:
         path = []
         while fringe and depth < maxDepth:
             print("calculating")
-
             if not(path):
                 node = fringe.pop(findClosest(point,fringe,path))
             else: 
@@ -85,16 +84,14 @@ class Algorithms:
                 destination2Found == True
 
             print(fringe,destination1Found,destination2Found)
-            if destination1 and destination2:
+            if (destination1==False) and (destination2==False):
+                print("made it to the return")
                 return path
             fringe = fringe + node.connections
             depth += 1
             print(len(fringe))
-
-        return "No Path Found"
-
-
-
+        print("made it here")
+        return path
     #--------------------------------
     #--------------------------------
     @classmethod

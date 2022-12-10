@@ -28,7 +28,7 @@ class Button:
         return False
 
     def updateDisplayInformation(self,window,pathFound,time):
-        if isinstance(pathFound,list):
+        if isinstance(pathFound,list) and len(pathFound)>0:
             distance = 0
             for index in range(1,len(pathFound)):
                 distance += math.dist((pathFound[index].x,pathFound[index].y),(pathFound[index-1].x,pathFound[index-1].y))
@@ -68,7 +68,8 @@ class greedySearchButton(Button):
 
     def findPath(self,window):
         t0 = time.time()
-        pathFound = Algorithms.greedySearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        var =  Algorithms.greedySearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        pathFound = var if len(var)>0 and isinstance(var,list) else []
         t1 = time.time()
         print(t0,t1)
         window.map.pathFound = pathFound
@@ -105,6 +106,7 @@ class ClearButton(Button):
 
     def clear(self,window):
         window.map.pathFound = []
+        window.information = ["Calculation time:","Path distance:"]
 
         
 # class PauseButton(Button):
