@@ -118,25 +118,42 @@ class Algorithms:
         came_from[start] = None
         cost_so_far[start] = 0
 
-        while not frontier.empty():
-            current = frontier.get()
+        # while not frontier.empty():
+        #     current = frontier.get()
             
-            if current == goal:
-                break
+        #     if current == goal:
+        #         break
             
-            for next in graph.neighbors(current):
-                new_cost = cost_so_far[current] + graph.cost(current, next)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost
-                    frontier.put(next, priority)
-                    came_from[next] = current
+        #     for next in graph.neighbors(current):
+        #         new_cost = cost_so_far[current] + graph.cost(current, next)
+        #         if next not in cost_so_far or new_cost < cost_so_far[next]:
+        #             cost_so_far[next] = new_cost
+        #             priority = new_cost
+        #             frontier.put(next, priority)
+        #             came_from[next] = current
 
     
         
 
     #work code: kind of like greedy search where it choses the shortest path given. If a previous point is found and there is a path which is 'cheaper',
         #use that to get the path
-    #explore = [child nodes]
-    #while (destination hasn't been reached):
-        #
+    
+    
+
+    """
+    function Dijkstra(Graph, source):
+        for each vertex v in Graph:	// Initialization
+            dist[v] := infinity	// initial distance from source to vertex v is set to infinite
+          	previous[v] := undefined	// Previous node in optimal path from source
+	    dist[source] := 0	// Distance from source to source
+	    Q := the set of all nodes in Graph	// all nodes in the graph are unoptimized - thus are in Q
+	    while Q is not empty:	// main loop
+	        u := node in Q with smallest dist[ ]
+	        remove u from Q
+	        for each neighbor v of u:	// where v has not yet been removed from Q.
+	            alt := dist[u] + dist_between(u, v)
+	            if alt < dist[v]	// Relax (u,v)
+                    dist[v] := alt
+	                previous[v] := u
+	    return previous[ ]
+    """
