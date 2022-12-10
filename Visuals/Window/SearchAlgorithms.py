@@ -16,7 +16,7 @@ class Algorithms:
 
     def heuristic1(point_s,point_g):
         # a basic heuristic that uses euclidean distance, returns a float
-        return math.dist((point_s-point_g)**2 + (point_s-point_g)**2)
+        return math.dist((point_s.x,point_s.y),(point_g.x,point_g.y))
     #--------------------------------
 
     def heuristic2(a,b):
