@@ -28,7 +28,9 @@ class Button:
         return False
 
     def updateDisplayInformation(self,window,pathFound,time):
-        if isinstance(pathFound,list) and len(pathFound)>0:
+        # print("pathFOund:",pathFound)
+        if isinstance(pathFound,list) and len(pathFound)>0 and ("No path Found" not in pathFound):
+            # print("Made it here")
             distance = 0
             for index in range(1,len(pathFound)):
                 distance += math.dist((pathFound[index].x,pathFound[index].y),(pathFound[index-1].x,pathFound[index-1].y))
@@ -49,10 +51,9 @@ class AStarSearchButton(Button):
 
     def findPath(self,window):
         t0 = time.time()
-        pathFound = Algorithms.AStarSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
+        pathFound = [window.map.startLocation]+Algorithms.AStarSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
         t1 = time.time()
-        print(t0,t1)
-        window.map.pathFound = pathFound
+        window.map.pathFound = pathFound if "No path Found" not in pathFound else []
         self.updateDisplayInformation(window,pathFound,t1-t0)
 
 
@@ -71,7 +72,6 @@ class greedySearchButton(Button):
         var =  Algorithms.greedySearch(window.map.startLocation,window.map.destination1,window.map.destination2)
         pathFound = var if len(var)>0 and isinstance(var,list) else []
         t1 = time.time()
-        print(t0,t1)
         window.map.pathFound = pathFound
         self.updateDisplayInformation(window,pathFound,t1-t0)
 
@@ -89,7 +89,6 @@ class DijkstrasSearchButton(Button):
         t0 = time.time()
         pathFound = Algorithms.DijkstrasSearch(window.map.startLocation,window.map.destination1,window.map.destination2)
         t1 = time.time()
-        print(t0,t1)
         window.map.pathFound = pathFound
         self.updateDisplayInformation(window,pathFound,t1-t0)
 

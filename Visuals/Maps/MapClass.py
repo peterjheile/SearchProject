@@ -19,6 +19,7 @@ class Map:
         self.allLocations = []
         self.startLocation = Location(self.width,self.height,False, True)
         self.destination1,self.destination2 = tuple(Generator.generateAllDestinations(self.width,self.height))
+        print(self.destination1 == self.destination2)
         self.allLocations.append(self.startLocation)
         self.allLocations.append(self.destination1)
         self.allLocations.append(self.destination2)
@@ -39,13 +40,16 @@ class Map:
             for other in location.connections:
                 pygame.draw.line(display,(0,0,0),(location.x,location.y),(other.x,other.y),width = 1)
 
-        color = (255,0,0)
+        color = (255,200,0)
         for index in range(len(self.pathFound)-1):
             location = self.pathFound[index]
             next = self.pathFound[index+1]
-            pygame.draw.line(display,color,(location.x,location.y),(next.x,next.y),width = 3)
-            if self.pathFound[index]:
-                color = (255,200,0)
+            if color == (255,200,0):
+                pygame.draw.line(display,color,(location.x,location.y),(next.x,next.y),width = 3)
+            else:
+                pygame.draw.line(display,color,(location.x+2,location.y+2),(next.x+2,next.y+2),width = 3)
+            if self.pathFound[index+1] == self.destination1 or self.pathFound[index+1] == self.destination2:
+                color = (255,0,0)
 
     def draw(self,display):
         self.drawMap(display)

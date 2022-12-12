@@ -14,8 +14,8 @@ class GUI:
         self.ZoomOutButton = ZoomOutButton("Zoom out")
         self.clearButton = ClearButton("Clear Search")
         self.greedySearchbutton = greedySearchButton("Greedy Search")
-        self.DijkstrasSearchButton = DijkstrasSearchButton("Djikstas Search")
-        self.buttons = [self.clearButton,self.AStarSearchButton,self.saveButton,self.ZoomInButton,self.ZoomOutButton, self.greedySearchbutton,self.DijkstrasSearchButton]
+        # self.DijkstrasSearchButton = DijkstrasSearchButton("Djikstas Search")
+        self.buttons = [self.clearButton,self.AStarSearchButton,self.saveButton,self.ZoomInButton,self.ZoomOutButton, self.greedySearchbutton]
 
     def draw(self,display):
         for i in self.buttons:
@@ -24,7 +24,7 @@ class GUI:
     def update(self,mousePos,display,window):
         self.clearButton.checkClicked(mousePos,window)
         self.AStarSearchButton.checkClicked(mousePos,window)
-        self.DijkstrasSearchButton.checkClicked(mousePos,window)
+        # self.DijkstrasSearchButton.checkClicked(mousePos,window)
         self.greedySearchbutton.checkClicked(mousePos,window)
         self.saveButton.checkClicked(mousePos,window)
         self.ZoomInButton.checkClicked(mousePos,window,display)

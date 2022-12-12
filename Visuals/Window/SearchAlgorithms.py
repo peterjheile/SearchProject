@@ -12,103 +12,136 @@
 #--------------------------------
 import math
 from queue import PriorityQueue
+import copy
 class Algorithms:
 
-    def heuristic1(point_s,point_g):
+    def heuristic1(point_s, dest1, dest2, dest1Found, dest2Found):
         # a basic heuristic that uses euclidean distance, returns a float
-        return math.dist((point_s.x,point_s.y),(point_g.x,point_g.y))
+        if dest1Found:
+            closest = math.dist((point_s.x,point_s.y),(dest2.x,dest2.y))
+        elif dest2Found:
+            closest = math.dist((point_s.x,point_s.y),(dest1.x,dest1.y))
+        else: 
+            closest = math.dist((point_s.x,point_s.y),(dest1.x,dest1.y)) if math.dist((point_s.x,point_s.y),(dest1.x,dest1.y)) < math.dist((point_s.x,point_s.y),(dest2.x,dest2.y)) else math.dist((point_s.x,point_s.y),(dest2.x,dest2.y))
+        return closest
+
     #--------------------------------
 
-    def heuristic2(a,b):
+    def heuristic2(point_s, dest1,dest2, path):
         # Manhattan distance on a square grid
-        return abs(a.x - b.x) + abs(a.y - b.y)
+        return 0
 
     #-----------------------------------------
-    def f_value(point_s,nextPoint,destination1,destination2):
-        return point_s.cost(nextPoint)+Algorithms.hueristic(nextPoint,destination1,destination2)
+    def f_value(point_s,nextPoint,destination1,destination2,dest1Found,dest2Found):
+        return point_s.cost(nextPoint)+ Algorithms.heuristic1(nextPoint,destination1,destination2,dest1Found,dest2Found)
     #--------------------------------
     @classmethod
-    def AStarSearch(self, point, destination1, destination2, maxDepth= 10):
-        frontier = PriorityQueue()
-        x = point.x
-        y = point.y
-        start = (x,y)
-        frontier.put(start, 0)
-        came_from = dict()
-        cost_so_far = dict()
-        came_from[start] = None
-        cost_so_far[start] = 0
-        goal = destination1
+    def AStarSearch(self, start, destination1, destination2, dest1Found = False, dest2Found = False, depth = 0, path = [], maxDepth = 50):
+        def lowestChildren(children,path):
+            lowest = []
+            lowCount = math.inf
+            for child in children:
+                if path.count(child)<lowCount:
+                    lowCount = path.count(child)
+            for child in children:
+                if path.count(child) <= lowCount:
+                    lowest.append(child)
+            return lowest
+        
+        def calcBestF(parent, dest1,dest2,dest1Found,dest2Found,path):
+            children = parent.connections.copy()
+            if not(dest1Found) and not(dest2Found):
+                children = lowestChildren(children,path)
+            elif dest1Found:
+                children = lowestChildren(children,path[path.index(destination1):])
+            else:
+                children = lowestChildren(children,path[path.index(destination2):])
+            lowest,lNode = self.f_value(parent,children[0],dest1,dest2,dest1Found,dest2Found),children[0]
+            for child in children[1:]:
+                f = self.f_value(parent,child,dest1,dest2,dest1Found,dest2Found)
+                #to-do: make sure the algorithm does not keep repeating
+                if f < lowest:
+                    lowest,lNode = f,child
+            return lNode
+        # if not(path):
+        #     path = path.append(start)
+        nextNode = calcBestF(start, destination1,destination2,dest1Found,dest2Found,path)
+        if depth>=maxDepth:
 
-        while not frontier.empty():
-            current = frontier.get()
-
-            if current == goal:
-                break
-            for next in point.connections:
-                new_cost = cost_so_far[current] + next.cost(next)
-                if next not in cost_so_far or new_cost < cost_so_far[next]:
-                    cost_so_far[next] = new_cost
-                    priority = new_cost + Algorithms.heuristic1(goal.cost(goal),next.cost(next))
-                    frontier.put(next, priority)
-                    came_from[next] = current
+            return ["No path Found"]
+        if (dest1Found and nextNode == destination2) or (dest2Found and nextNode == destination1):
+            return [nextNode]
+        if start == destination1:
+            dest1Found = True
+        elif start == destination2:
+            dest2Found = True
+        depth = depth+1
+        path = path+[nextNode]
+        return [nextNode] + Algorithms.AStarSearch(nextNode,destination1,destination2,dest1Found,dest2Found,depth,path)
             
 
     #--------------------------------
     #--------------------------------
     @classmethod
-    def greedySearch(self, point, destination1, destination2, depth = 0, maxDepth = 30):
+    def greedySearch(self, start, destination1, destination2, maxDepth = 1000, depth = 0):
+        def findClosestLeastNode(fringe,path,destination1,destination2):
+            if destination1 in fringe and destination1 not in path:
+                return destination1
+            elif destination2 in fringe and destination2 not in path:
+                return destination2
+            leastNodes = []
+            leastCount = math.inf
+            for node in fringe:
+                count = path.count(node)
+                if count < leastCount:
+                    leastCount = count
+            for node in fringe:
+                if path.count(node) <= count:
+                    leastNodes.append(node)
+            
+            if len(leastNodes) == 1:
+                return leastNodes[0]
+            else:
+                closest = leastNodes[0]
+                for node in leastNodes[1:]:
+                    if path.count(node)<path.count(closest):
+                        closest = node
+                return closest
+
         destination1Found = False
         destination2Found = False
 
-        def findClosest(point, fringe,path):
-            lowest = fringe[0]
-            for node in fringe[1:]:
-                if lowest.cost(node) < point.cost(lowest) and (lowest not in path):
-                    lowest = node
-            print(lowest)
-            return fringe.index(lowest)
+        path = [start]
+        fringe = start.connections.copy()
 
-        fringe = [point]
-        path = []
-        while fringe and depth < maxDepth:
-            print("calculating")
-            if not(path):
-                node = fringe.pop(findClosest(point,fringe,path))
-            else: 
-                node = fringe.pop(findClosest(path[len(path)-1],fringe,path))
-            path.append(node)
-            if node == destination1:
-                destination1Found == True
-            elif node == destination2:
-                destination2Found == True
+        while depth < maxDepth:
+            nextNode = findClosestLeastNode(fringe, path,destination1,destination2)
+            path.append(nextNode)
+            # if nextNode == destination1 or nextNode == destination2:
+            #     print("found destination")
+            if nextNode == destination1:
+                destination1Found = True
+            if nextNode == destination2:
+                destination2Found = True
 
-            print(fringe,destination1Found,destination2Found)
-            if (destination1==False) and (destination2==False):
-                print("made it to the return")
+            if destination1Found and destination2Found:
                 return path
-            fringe = fringe + node.connections
-            depth += 1
-            print(len(fringe))
-        print("made it here")
-        return path
-    #--------------------------------
-    #--------------------------------
-    @classmethod
-    def MarkovSearch(self, point, destination1, destination2):
-        pass
 
-    #--------------------------------
+            fringe = nextNode.connections.copy()
+            depth += 1
+        return "none"
+
+
     #--------------------------------
     @classmethod
     def DijkstrasSearch(self, spoint, destination1, destination2):
-        
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = dict()
-        cost_so_far = dict()
-        came_from[start] = None
-        cost_so_far[start] = 0
+        pass
+        # frontier = PriorityQueue()
+        # frontier.put(start, 0)
+        # came_from = dict()
+        # cost_so_far = dict()
+        # came_from[start] = None
+        # cost_so_far[start] = 0
 
         # while not frontier.empty():
         #     current = frontier.get()
