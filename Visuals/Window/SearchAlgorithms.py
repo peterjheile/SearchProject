@@ -133,6 +133,12 @@ class Algorithms:
 
 
     #--------------------------------
+
+    #this is a third algorithm we began to try; however due to time constrains, other work required, and other classes
+    #we determined that we shoudl put our focus on teh other two algorithms
+
+    #we chose not to implement this one because it would require a large portion longer to compute thatn the other
+    #whcih is one of our priorities, and in addition woudl only sometimes find better solutions then our A* algorithm
     @classmethod
     def DijkstrasSearch(self, spoint, destination1, destination2):
         pass
@@ -156,13 +162,8 @@ class Algorithms:
         #             priority = new_cost
         #             frontier.put(next, priority)
         #             came_from[next] = current
-
-    
-        
-
     #work code: kind of like greedy search where it choses the shortest path given. If a previous point is found and there is a path which is 'cheaper',
         #use that to get the path
-    
     
 
     """
